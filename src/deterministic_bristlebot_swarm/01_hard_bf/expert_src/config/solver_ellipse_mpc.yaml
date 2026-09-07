@@ -1,0 +1,44 @@
+model_bounds:
+  px_min: -0.4
+  px_max: 0.4
+  py_min: -0.4
+  py_max: 0.4
+  th_min: -6.28
+  th_max: 6.28
+  v_min: 0.01
+  v_max: 0.15
+  om_min: -3.463
+  om_max: 1.432
+solver_creation:
+  N: 20
+  Ts: 0.1
+reynolds:
+  q_cohesion: 2.0
+  q_align: 5.0
+communication:
+  comm_radius: 0.15   # KD-tree neighbor / decentralized comm radius [m] (Python-side; not a solver param)
+  max_consensus: 2    # inner re-solve (consensus) iterations per decentralized step (Python-side; not a solver param)
+collision:
+  max_neighbours: 5
+  d_safe: 0.07
+obstacle_avoidance:
+  max_obstacles: 5
+  d_safe_obs: 0.07
+solver_options:
+  hessian_approx: GAUSS_NEWTON
+  levenberg_marquardt: 0.5
+  nlp_solver_max_iter: 1
+  qp_solver_max_iter: 10
+  tol: 0.0001
+  qp_solver: PARTIAL_CONDENSING_HPIPM
+
+contact_response:
+  # Reactive steering layer (sim_engine/collision_response.py, CollisionHandler).
+  # Python-side, NOT a solver param -- same category as communication.max_consensus.
+  enabled: true         # ON by default: part of the deployed closed loop. Prevents
+                        # physical overlap and registers the real robot-robot /
+                        # robot-obstacle contacts; total_collisions is counted inside
+                        # this step, so it stays 0 when disabled. Pass
+                        # enable_collision=False to a run that deliberately measures
+                        # the raw MPC.
+  steer_decay: 0.85     # per-step decay of the heading bias (0 = instant, 1 = permanent)

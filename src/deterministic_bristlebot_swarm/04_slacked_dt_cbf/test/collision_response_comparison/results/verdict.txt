@@ -1,0 +1,28 @@
+==============================================================================
+VERDICT - collision_response.py (v1) vs collision_response2.py (v2)
+Scenario: PHOTOTAXIS + 2 static obstacles | pre-resolution metrics
+==============================================================================
+
+Pooled across N=[10, 25, 50, 75]:
+category                                              v1          v2    winner
+SAFETY (robot-robot overlap-frames)                 7695   1.252e+04        v1
+SAFETY (robot-obstacle overlap-frames)              1363        1284        v2
+SAFETY (max robot-robot penetration)             0.01207     0.04094        v1
+SAFETY (min robot-robot centre dist)             0.03092     0.01467        v1
+REALISM (total injected displacement)              14.91           0        v2
+LIVENESS (steady-state light intensity)          0.09706      0.1089        v2
+LIVENESS (solver failure rate)                   0.04428     0.05625        v1
+
+Per-N robot-robot overlap-frames (mean ± 95% CI):
+    N                  v1                  v2   Δ% (v2 vs v1)
+   10          8.3±12.0           3.7±4.9            -55.4%
+   25        323.1±120.2        773.7±275.2          139.5%
+   50       8491.0±396.5      14429.1±1456.8           69.9%
+   75      21958.2±552.4      34859.5±2249.9           58.8%
+
+------------------------------------------------------------------------------
+Category wins:  v1=4  v2=3
+v2 injects 0.00 cm vs v1 1491.30 cm of teleport (pooled total/run); v2 is the physically-honest one.
+v2 robot-robot overlap-frames vs v1: +62.7% (negative = v2 safer on real contacts).
+OVERALL (by category count): v1 (teleport)
+==============================================================================

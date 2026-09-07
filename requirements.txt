@@ -1,0 +1,13 @@
+# Runtime dependencies. acados itself is not on PyPI: install it with setup.sh,
+# which also installs its acados_template Python interface.
+numpy>=1.26,<3
+scipy>=1.11
+matplotlib>=3.6
+PyYAML>=6.0
+casadi>=3.6
+
+# Bayesian optimization for the gain sweeps in src/experiments/tuning/
+optuna>=3.4
+
+# Optional, only for the animation/video helpers in each variant's viz_engine
+imageio-ffmpeg>=0.4

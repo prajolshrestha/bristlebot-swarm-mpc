@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+
+# Generated acados solvers. Rebuilt by each variant's
+# expert_src/generate_solver_via_acados.py, and NOT portable: acados bakes the
+# build-time absolute path into the generated JSON, so a copied solver silently
+# loads from wherever it was first built.
+**/expert_src/lib/
+
+# Simulation output. Everything under results/ is regenerable by re-running the
+# campaigns in src/experiments/simulation/jobs/, so none of it is tracked: raw
+# traces and checkpoints, aggregated CSVs, rendered figures and job logs alike.
+# results/logs/ is the one exception: the directory itself is tracked via an
+# empty .gitkeep, because Slurm does not create a missing --output directory and
+# a job whose log file cannot be opened dies at launch. Git cannot re-include a
+# path inside an ignored directory, so results/ is ignored by contents (/*)
+# rather than as a whole.
+src/experiments/simulation/results/*
+!src/experiments/simulation/results/logs/
+src/experiments/simulation/results/logs/*
+!src/experiments/simulation/results/logs/.gitkeep
+
+# Data and rendered media anywhere else in the tree, same reasoning.
+*.csv
+*.png
+*.pdf
+*.mp4
+*.gif
+
+# Slurm job output, when a job is launched without redirecting to $WORK
+*.out
+*.err
+
+# Tuning scratch: worker scripts and payloads written at run time by their parent
+# driver, plus resumable Optuna study state. The exported CSVs are the record.
+_sweep_worker_*.py
+_sweep_result_*.json
+_timing_worker.py
+_timing_result_*.json
+**/sweep_results/*.db
+
+# Editor and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
